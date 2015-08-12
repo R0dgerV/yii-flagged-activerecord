@@ -43,6 +43,10 @@ abstract class TSFlaggedActiveRecord extends CActiveRecord
         return (($this->{$this->flagsField}&$flag) == $flag);
     }
 
+    public function disabledFlagLabels() {
+        return false;
+    }
+
     public function flags()
     {
         return array(
@@ -119,7 +123,7 @@ abstract class TSFlaggedActiveRecord extends CActiveRecord
 
         foreach ($flags as $name => $value) {
             if (($flag & $value) === $value) {
-                $flagLabels[] = isset($this->_flagLabels[$value]) ? $this->_flagLabels[$value] : $this->generateAttributeLabel($name);
+                $flagLabels[] = isset($this->_flagLabels[$value]) ? $this->_flagLabels[$value] : $this->disabledFlagLabels()?$name:$this->generateAttributeLabel($name);
             }
         }
 
